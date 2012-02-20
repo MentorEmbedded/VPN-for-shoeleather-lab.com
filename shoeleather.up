@@ -1,0 +1,31 @@
+#!/bin/bash
+
+echo ${0} executing
+
+# Save off previous resolv.conf
+
+echo mv /etc/resolv.conf /etc/resolv.conf.shoeleather-save
+mv /etc/resolv.conf /etc/resolv.conf.shoeleather-save
+
+# Build up a new resolv.conf
+echo adding shoeleather-lab.com and 17.16.252.254 to /etc/resolv.conf
+
+# start with a nameserver line to go before all others
+echo "nameserver 172.16.252.254" > /etc/resolv.conf
+
+# grab the last domain or search line from resolv.conf, change it to a search
+# and add shoeleather-lab.com
+
+if egrep -q "^(domain|search)" /etc/resolv.conf.shoeleather-save; then
+    egrep "^(domain|search)" /etc/resolv.conf.shoeleather-save \
+    | tail -n 1 \
+    | sed "s/^[a-z]*\(.*\)/search \1 shoeleather-lab.com/" \
+    >> /etc/resolv.conf
+else
+    echo "search shoeleather-lab.com" >> /etc/resolv.conf
+    cat /etc/resolv.conf.shoeleather-save >> /etc/resolv.conf
+fi
+
+# get the rest of the file
+egrep -v "^(domain|search)" /etc/resolv.conf.shoeleather-save \
+>> /etc/resolv.conf

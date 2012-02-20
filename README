@@ -1,0 +1,14 @@
+The shoeleather.ovpn config file references shoeleather.creds for your
+username and password.  It also calls the scripts shoeleather.up and
+shoeleather.down, which modify your /etc/resolv.conf to add the proper
+DNS information for shoeleather.  shoeleather.up and shoeleather.down
+are fairly brute-force right now, but they will probably work.  You
+may need to suit them to your needs.
+
+0) Ensure the openvpn package is installed
+
+1) Edit shoeleather.creds so that the first line is your username
+and the second line is your password
+
+2) Start up the vpn with:
+   sudo openvpn shoeleather.ovpn

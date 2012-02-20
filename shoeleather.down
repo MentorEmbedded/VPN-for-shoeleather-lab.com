@@ -1,0 +1,8 @@
+#!/bin/bash
+
+# This script will restore the saved version of resolv.conf
+
+echo ${0} executing
+
+echo mv /etc/resolv.conf.shoeleather-save /etc/resolv.conf
+mv /etc/resolv.conf.shoeleather-save /etc/resolv.conf
